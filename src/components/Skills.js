@@ -38,8 +38,8 @@ export const Skills = () => {
                                 TAILWIND CSS | BOOTSTRAP |
                                 REACT JS |
                                 JAVASCRIPT |
-                                EXPRESS |
-                                MONGODB 
+                                EXPRESS JS |
+                                MONGODB | NODE JS
                             </div>
 
              
