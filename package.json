@@ -28,7 +28,7 @@
     "rstart": "react-scripts start",
     "start": "node server.js",
     "build": "react-scripts build",
-    "thebuild":"NPM_CONFIG_PRODUCTION=false npm install npm  && npm run build ",
+    "thebuild":"NPM_CONFIG_PRODUCTION=false npm install && npm run build ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
