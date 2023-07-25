@@ -15,6 +15,7 @@ export const Contact = () => {
   const [formDetails, setFormDetails] = useState(formInitialDetails);
   const [buttonText, setButtonText] = useState('Send');
   const [status, setStatus] = useState({});
+  const [messagedisplay, setmessagedisplay] = useState("none")
 
   const onFormUpdate = (category, value) => {
       setFormDetails({
@@ -26,30 +27,45 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    let response = await fetch("/contact", {
+    let response = await fetch("http://localhost:5000/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify(formDetails),
     });
-    setButtonText("Send");
     let result = await response.json();
     setFormDetails(formInitialDetails);
-    if (result.code == 200) {
-      setStatus({ succes: true, message: 'Message sent successfully'});
+    if (result.code === 200) {
+      setStatus({ succes: true, message: 'Message sent successfully!' });
       setTimeout(() => {
         setButtonText('Sent')
+        setmessagedisplay("block")
+        
       }, 2000);
+      setTimeout(() => {
+        setButtonText('Send')
+        setmessagedisplay("block")
+      }, 2000);
+      setInterval(() => {
+        setmessagedisplay("none")
+      }, 4000);
     } else {
       setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
       setTimeout(() => {
         setButtonText('Not sent')
+        setButtonText('Send')
+        setmessagedisplay("block")
       }, 2000);
-
+      setTimeout(() => {
+        setButtonText('Send')
+        setmessagedisplay("block")
+      }, 2000);
+      setTimeout(() => {
+        setmessagedisplay("none")
+      }, 4000);
     }
-
-  };
+   };
 
   return (
     <section className="contact" id="connect">
@@ -83,7 +99,10 @@ export const Contact = () => {
                     </Col>
                     <Col size={12} className="px-1">
                       <textarea rows="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
-                      <button type="submit"><span>{buttonText}</span></button>
+                      <button type="submit"><span>{buttonText}</span></button>   <div style={{ fontWeight:"bold",display:`${messagedisplay}`,color:"black",marginTop:"1rem", background:"#9ef9fd",height:'5rem',borderRadius:"10px",padding:'1rem'}}>
+                        {status.message} 
+                      </div>
+                   
                     </Col>
          
                   </Row>
